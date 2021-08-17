@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.PointDao">
+    <insert id="add" parameterType="com.bean.Point">
+        insert into point(point_name, unit, port, lon, lat, start_x, start_y, start_z, calculation_time,
+                std_x, std_y, std_z, legal_x_threshold, legal_y_threshold, legal_z_threshold,
+                std_x_threshold, std_y_threshold, std_z_threshold,
+                emergency_x_threshold, emergency_y_threshold, emergency_z_threshold, table_name)
+                values(#{point_name}, #{unit}, #{port}, #{lon}, #{lat}, #{start_x}, #{start_y}, #{start_z}, #{calculation_time},
+                #{std_x}, #{std_y}, #{std_z}, #{legal_x_threshold}, #{legal_y_threshold}, #{legal_z_threshold},
+                #{std_x_threshold}, #{std_y_threshold}, #{std_z_threshold},
+                #{emergency_x_threshold}, #{emergency_y_threshold}, #{emergency_z_threshold}, #{table_name})
+    </insert>
+
+    <select id="getPointByPointName" resultType="com.bean.Point">
+        select * from point where point_name = #{point_name}
+    </select>
+
+    <select id="getTableNameByPort" resultType="String">
+        select table_name from point where port = #{port}
+    </select>
+
+    <select id="getPointByTableName" resultType="com.bean.Point">
+        select * from point where table_name = #{table_name}
+    </select>
+
+    <select id="getWorkPortList" resultType="Integer">
+        select port from point where port is not null
+    </select>
+
+    <update id="update" parameterType="com.bean.Point">
+        update point set point_name = #{point_name}, port = #{port}, lon = #{lon}, lat = #{lat},
+                start_x = #{start_x}, start_y = #{start_y}, start_z = #{start_z}, calculation_time = #{calculation_time},
+                std_x = #{std_x}, std_y = #{std_y}, std_z = #{std_z},
+                legal_x_threshold = #{legal_x_threshold}, legal_y_threshold = #{legal_y_threshold}, legal_z_threshold = #{legal_z_threshold},
+                std_x_threshold = #{std_x_threshold}, std_y_threshold = #{std_y_threshold}, std_z_threshold = #{std_z_threshold},
+                emergency_x_threshold = #{emergency_x_threshold}, emergency_y_threshold = #{emergency_y_threshold}, emergency_z_threshold = #{emergency_z_threshold},
+                table_name = #{table_name} where id = #{id}
+    </update>
+
+    <select id="searchNoCalculatePoint" resultType="com.bean.Point">
+        select * from point where std_x is null
+    </select>
+
+</mapper>

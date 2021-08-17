@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.PointDataDao">
+
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+    <insert id="add" parameterType="Map">
+        insert into ${table_name} (datetime, x, y, z, status, std_x, std_y, std_z, be_legal, be_std, diff_x, diff_y, diff_z, emergency_x, emergency_y, emergency_z)
+                values(#{pointData.datetime}, #{pointData.x}, #{pointData.y}, #{pointData.z}, #{pointData.status},
+                #{pointData.std_x}, #{pointData.std_y}, #{pointData.std_z}, #{pointData.be_legal}, #{pointData.be_std},
+                #{pointData.diff_x}, #{pointData.diff_y}, #{pointData.diff_z}, #{pointData.emergency_x}, #{pointData.emergency_y}, #{pointData.emergency_z})
+    </insert>
+
+    <update id="update" parameterType="Map">
+        update ${table_name} set std_x = #{pointData.std_x}, std_y = #{pointData.std_y}, std_z = #{pointData.std_z},
+                be_legal = #{pointData.be_legal}, be_std = #{pointData.be_std},
+                diff_x = #{pointData.diff_x}, diff_y = #{pointData.diff_y}, diff_z = #{pointData.diff_z},
+                emergency_x = #{pointData.emergency_x}, emergency_y = #{pointData.emergency_y}, emergency_z = #{pointData.emergency_z}
+                where id = #{pointData.id}
+    </update>
+
+    <select id="getLastLegalData" parameterType="Map" resultType="com.bean.PointData">
+        select * from ${table_name} where status = 4 and be_legal = 1 and datetime > #{start_time} order by id DESC limit 1
+    </select>
+
+    <select id="getLastStdData" parameterType="Map" resultType="com.bean.PointData">
+        select * from ${table_name} where status = 4 and be_std = 1 and datetime > #{start_time} order by id DESC limit 1
+    </select>
+
+    <select id="getPointDataList" parameterType="Map" resultType="com.bean.PointDataList">
+        select datetime, x, y, z, std_x, std_y, std_z, diff_x, diff_y, diff_z, emergency_x, emergency_y, emergency_z from ${table_name}
+        <where>
+            status = 4 and be_legal = 1 and std_x is not null and
+            datetime >= #{start_time} and
+            datetime &lt;= #{end_time}
+        </where>
+    </select>
+
+    <select id="getRawPointDataList" parameterType="Map" resultType="com.bean.RawPointDataList">
+        select status, datetime, x, y, z from ${table_name}
+        <where>
+            datetime >= #{start_time} and
+            datetime &lt;= #{end_time}
+        </where>
+    </select>
+
+    <select id="getNoCalculateDataCount" parameterType="Map" resultType="int">
+        select count(*) from ${table_name} where std_x is null and be_std = 1 and datetime > #{start_time}
+    </select>
+
+    <select id="getNoCalculateDataList" parameterType="Map" resultType="com.bean.PointData">
+        select * from ${table_name} where std_x is null and be_std = 1 and datetime > #{start_time} order by datetime asc
+    </select>
+
+</mapper>

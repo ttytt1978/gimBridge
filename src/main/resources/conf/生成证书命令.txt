@@ -1,0 +1,1 @@
+keytool -genkey -alias red5 -keypass 123456 -keyalg RSA -keysize 1024 -validity 365 -keystore D:/red5.jks -storepass 123456
