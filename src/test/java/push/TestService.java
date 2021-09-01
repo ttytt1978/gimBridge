@@ -2,6 +2,7 @@ package push;
 
 
 import com.bean.*;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.service.*;
 import org.apache.james.mime4j.dom.datetime.DateTime;
@@ -148,12 +149,14 @@ public class TestService {
         }
         //*/
 
-        /*
-        List<PointDataList> list = pointDataService.getPointDataList(Timestamp.valueOf("2021-08-12 10:11:20.124"), Timestamp.valueOf("2021-08-12 10:12:20.000"), "point_data_01");
-        System.out.print(list.toString());
+        //*
+        PageInfo<PointDataList> list = pointDataService.getPointDataList(Timestamp.valueOf("2021-08-12 10:11:12.124"), Timestamp.valueOf("2021-08-12 10:26:12.000"), "point_data_03", 2, 50);
+        for(PointDataList pointDataList: list.getList()) {
+            System.out.print(pointDataList.toString());
+        }
 
         //*/
-        //*/
+        /*/
         PageInfo<RawPointDataList> list = pointDataService.getRawPointDataList(Timestamp.valueOf("2021-08-16 14:11:20.124"), Timestamp.valueOf("2021-08-16 14:12:20.000"), "point_data_02", 2, 20);
         for(RawPointDataList rawPointDataList: list.getList()) {
             System.out.print(rawPointDataList.toString());

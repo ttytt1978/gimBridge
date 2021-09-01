@@ -1,9 +1,10 @@
 package com.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-public class RawPointDataList {
+public class RawPointDataList implements Serializable {
     private int status;
     private Timestamp datetime;
     private BigDecimal x;

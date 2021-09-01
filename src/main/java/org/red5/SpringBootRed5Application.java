@@ -16,7 +16,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @ServletComponentScan
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.convert","com.service", "com.maincontroller", "com.slavecontroller","com.socket", "com.schedule","org.red5.demo"})
+@ComponentScan(basePackages = {"com.convert","com.service", "com.maincontroller", "com.slavecontroller", "com.controller","com.socket", "com.schedule","org.red5.demo"})
 @MapperScan(basePackages = {"com.dao"})
 @EnableScheduling
 @EnableAutoConfiguration(exclude = {JmxAutoConfiguration.class})

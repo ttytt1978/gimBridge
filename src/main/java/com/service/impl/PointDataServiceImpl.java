@@ -87,12 +87,14 @@ public class PointDataServiceImpl implements PointDataService {
         return pointDataDao.update(pointData, table_name);
     }
 
-    public List<PointDataList> getPointDataList(Timestamp start_time, Timestamp end_time, String table_name) throws Exception{
+    public PageInfo<PointDataList> getPointDataList(Timestamp start_time, Timestamp end_time, String table_name, int index, int pageSize) throws Exception{
         if(end_time.getTime() - start_time.getTime() > 900000){
             throw(new Exception("时间范围必须小于15分钟！"));
         }
         else {
-            return pointDataDao.getPointDataList(start_time, end_time, table_name);
+            PageHelper.startPage(index, pageSize);
+            List<PointDataList> list = pointDataDao.getPointDataList(start_time, end_time, table_name);
+            return new PageInfo<PointDataList>(list);
         }
     }
 

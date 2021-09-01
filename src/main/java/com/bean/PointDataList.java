@@ -1,9 +1,12 @@
 package com.bean;
 
+import org.red5.io.object.Serializer;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-public class PointDataList {
+public class PointDataList implements Serializable {
     private Timestamp datetime;         //(监测时间)
     private BigDecimal x;               //(东西向测量值)
     private BigDecimal y;               //(南北向测量值)

@@ -15,7 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 
-@ControllerAdvice//(basePackages = "com.dq.controller")
+//@ControllerAdvice//(basePackages = "com.controller")
 @ResponseBody
 public class CustomResponseAdvice implements ResponseBodyAdvice<Object> {
 
